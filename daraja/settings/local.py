@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 from decouple import config, Csv
+import dj-database-url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 
@@ -83,14 +84,20 @@ WSGI_APPLICATION = "daraja.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": config("DATABASE_NAME"),
-        "USER": config("DATABASE_USER"),
-        "HOST": "localhost",
-        "PASSWORD": config("DATABASE_PASSWORD"),
+        "NAME": config("POSTGRES_DATABASE"),
+        "USER": config("POSTGRES_USER"),
+        "HOST": "POSTGRES_HOST",
+        "PASSWORD": config("POSTGRES_PASSWORD"),
         "PORT": "5432",
     }
 }
 
+'''
+# Read the DATABASE_URL environment variable for the database connection
+DATABASES = {
+    "default": dj_database_url.config(default=os.environ.get("POSTGRES_URL"))
+}
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
